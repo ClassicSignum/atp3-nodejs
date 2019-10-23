@@ -36,7 +36,16 @@ router.post('/delete/:id', function(request, response){
 		}
 	})
 });
-
+router.post('/adduser', function(request, response){
+	var sql = "select * from user where id="+request.params.id;
+	var user = {
+		username: request.body.username,
+		password: request.body.password,
+		ename: request.body.ename,
+		econt: request.body.contact
+	};
+	
+});
 router.get('/delete/:id', function(request, response){
 	var sql = "select * from user where id="+request.params.id;
 	db.getResults(sql, function(result){
