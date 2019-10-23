@@ -37,13 +37,21 @@ router.post('/delete/:id', function(request, response){
 	})
 });
 router.post('/adduser', function(request, response){
-	var sql = "select * from user where id="+request.params.id;
 	var user = {
 		username: request.body.username,
 		password: request.body.password,
 		ename: request.body.ename,
 		econt: request.body.contact
 	};
+	var sql ="insert into user values('', '"+ user.username+"', '"+user.password+"')";
+		
+	db.execute(sql, function(status){	
+		if(status){
+			response.redirect("/user/userList");
+		}else{
+			response.redirect("/user/delete/"+request.params.id);	
+		}
+	})
 	
 });
 router.get('/delete/:id', function(request, response){
