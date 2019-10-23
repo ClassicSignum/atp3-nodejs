@@ -22,7 +22,14 @@ router.get('/userList', function(request, response){
 
 router.get('/edit/:id', function(request, response){
 
-	response.send("Edit: "+ request.params.id);
+	var sql = "select * from user where id="+request.params.id;
+	db.execute(sql, function(status){	
+		if(status){
+			response.redirect("/user/userList");
+		}else{
+			response.redirect("/user/edit");	
+		}
+	})
 	
 });
 
@@ -43,7 +50,7 @@ router.post('/adduser', function(request, response){
 		ename: request.body.ename,
 		econt: request.body.contact
 	};
-	var sql ="insert into user values('', '"+ user.username+"', '"+user.password+"')";
+	var sql ="insert into user(id,username,password,empname,empcontact) values('', '"+ user.username+"', '"+user.password+"','"+user.ename+"','"+user.econt+"')";
 		
 	db.execute(sql, function(status){	
 		if(status){
